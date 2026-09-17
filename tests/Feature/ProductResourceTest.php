@@ -48,11 +48,16 @@ class ProductResourceTest extends TestCase
             ->get(route('products.show', $mintnopjes));
 
         $response->assertOk();
-        $response->assertSee('Venco');
-        $response->assertSee('Bert van Linge');
-        $response->assertSee('18-10-2024');
-        $response->assertSee('21');
-        $response->assertSee('25-10-2024');
+        $response->assertSeeInOrder([
+            'Leverancier',
+            'Venco',
+            'Bert van Linge',
+            'Productinformatie',
+            'Mintnopjes',
+            '18-10-2024',
+            '21',
+            '25-10-2024',
+        ]);
     }
 
     public function test_winegums_shows_no_stock_message(): void

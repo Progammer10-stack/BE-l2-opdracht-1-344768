@@ -31,6 +31,15 @@
             }, 4000);
         </script>
     @else
+        <h2>Leverancier</h2>
+
+        @if ($leverancier)
+            <p><strong>Naam:</strong> {{ $leverancier->Naam }}</p>
+            <p><strong>Contactpersoon:</strong> {{ $leverancier->ContactPersoon }}</p>
+            <p><strong>Leveranciernummer:</strong> {{ $leverancier->LeverancierNummer }}</p>
+            <p><strong>Mobiel nummer:</strong> {{ $leverancier->Mobiel }}</p>
+        @endif
+
         <h2>Productinformatie</h2>
 
         <table>
@@ -51,15 +60,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <h2>Leverancier</h2>
-
-        @if ($leverancier)
-            <p><strong>Naam:</strong> {{ $leverancier->Naam }}</p>
-            <p><strong>Contactpersoon:</strong> {{ $leverancier->ContactPersoon }}</p>
-            <p><strong>Leveranciernummer:</strong> {{ $leverancier->LeverancierNummer }}</p>
-            <p><strong>Mobiel nummer:</strong> {{ $leverancier->Mobiel }}</p>
-        @endif
     @endif
 
     <a class="terug" href="{{ route('products.index') }}">Terug naar magazijnoverzicht</a>
