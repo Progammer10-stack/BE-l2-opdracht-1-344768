@@ -24,13 +24,12 @@ class ProductController extends Controller
             ->get();
 
         $leverancier = $leveringen->first()?->leverancier;
-        $laatsteLevering = $leveringen->last();
-        $volgendeLevering = $laatsteLevering?->DatumEerstVolgendeLevering;
+        $volgendeLevering = $leveringen->last()?->DatumEerstVolgendeLevering;
 
         return view('products.show', compact(
             'product',
             'leverancier',
-            'laatsteLevering',
+            'leveringen',
             'volgendeLevering',
         ));
     }

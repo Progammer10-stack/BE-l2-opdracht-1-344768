@@ -46,18 +46,27 @@
             <thead>
                 <tr>
                     <th>Naam product</th>
-                    <th>Datum laatste levering</th>
+                    <th>Datum levering</th>
                     <th>Aantal</th>
                     <th>Eerstvolgende levering</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ $product->Naam }}</td>
-                    <td>{{ $laatsteLevering?->DatumLevering?->format('d-m-Y') ?? 'onbekend' }}</td>
-                    <td>{{ $laatsteLevering?->Aantal ?? 'onbekend' }}</td>
-                    <td>{{ $volgendeLevering?->format('d-m-Y') ?? 'onbekend' }}</td>
-                </tr>
+                @forelse ($leveringen as $levering)
+                    <tr>
+                        <td>{{ $product->Naam }}</td>
+                        <td>{{ $levering->DatumLevering?->format('d-m-Y') ?? 'onbekend' }}</td>
+                        <td>{{ $levering->Aantal }}</td>
+                        <td>{{ $levering->DatumEerstVolgendeLevering?->format('d-m-Y') ?? 'onbekend' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>{{ $product->Naam }}</td>
+                        <td>onbekend</td>
+                        <td>onbekend</td>
+                        <td>onbekend</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     @endif

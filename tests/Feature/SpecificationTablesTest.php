@@ -17,7 +17,7 @@ class SpecificationTablesTest extends TestCase
         $this->assertDatabaseCount('Leverancier', 5);
         $this->assertDatabaseCount('Magazijn', 13);
         $this->assertDatabaseCount('ProductPerAllergeen', 12);
-        $this->assertDatabaseCount('ProductPerLeverancier', 16);
+        $this->assertDatabaseCount('ProductPerLeverancier', 17);
     }
 
     public function test_winegums_have_null_stock_and_kruis_drop_has_no_next_delivery(): void
@@ -33,6 +33,14 @@ class SpecificationTablesTest extends TestCase
             'LeverancierId' => 5,
             'ProductId' => 12,
             'Aantal' => 45,
+            'DatumEerstVolgendeLevering' => null,
+        ]);
+
+        $this->assertDatabaseHas('ProductPerLeverancier', [
+            'Id' => 17,
+            'LeverancierId' => 5,
+            'ProductId' => 13,
+            'Aantal' => 23,
             'DatumEerstVolgendeLevering' => null,
         ]);
     }
