@@ -82,8 +82,10 @@ class ProductResourceTest extends TestCase
             'Naam product',
             'Datum levering',
             'Er is van dit product op dit moment geen voorraad aanwezig, de verwachte eerstvolgende levering is: 30-10-2024',
+            'Je wordt over 4 seconden teruggestuurd naar het magazijnoverzicht.',
         ]);
         $response->assertDontSee('16-10-2024');
+        $response->assertSee('4000', false);
     }
 
     public function test_zoute_ruitjes_allergens_are_shown_sorted_by_name(): void

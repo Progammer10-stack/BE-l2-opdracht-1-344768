@@ -62,6 +62,16 @@
         </tbody>
     </table>
 
+    @if (is_null($product->magazijn?->AantalAanwezig))
+        <p>Je wordt over 4 seconden teruggestuurd naar het magazijnoverzicht.</p>
+
+        <script>
+            setTimeout(function () {
+                window.location.href = "{{ route('products.index') }}";
+            }, 4000);
+        </script>
+    @endif
+
     <a class="terug" href="{{ route('products.index') }}">Terug naar magazijnoverzicht</a>
 </body>
 </html>
