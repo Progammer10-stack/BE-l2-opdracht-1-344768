@@ -74,9 +74,16 @@ class ProductResourceTest extends TestCase
             ->get(route('products.show', $winegums));
 
         $response->assertOk();
-        $response->assertSeeText('Er is van dit product op dit moment geen voorraad aanwezig');
-        $response->assertSee('30-10-2024');
-        $response->assertSee('4000');
+        $response->assertSeeInOrder([
+            'Leverancier',
+            'Basset',
+            'Joyce Stelterberg',
+            'Productinformatie',
+            'Naam product',
+            'Datum levering',
+            'Er is van dit product op dit moment geen voorraad aanwezig, de verwachte eerstvolgende levering is: 30-10-2024',
+        ]);
+        $response->assertDontSee('16-10-2024');
     }
 
     public function test_zoute_ruitjes_allergens_are_shown_sorted_by_name(): void
