@@ -42,6 +42,19 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_klant_is_sent_to_the_customer_home_after_login(): void
+    {
+        $klant = User::factory()->klant()->create();
+
+        $response = $this->post('/login', [
+            'email' => $klant->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('klant.home'));
+    }
+
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();

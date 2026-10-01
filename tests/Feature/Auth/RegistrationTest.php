@@ -28,21 +28,26 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('klant.home'));
+
+        $user = User::where('email', 'test@example.com')->firstOrFail();
+
+        $this->assertSame(UserRole::Klant, $user->role);
     }
 
-    public function test_registration_always_assigns_the_medewerker_role(): void
+    public function test_registration_assigns_klant_even_when_a_higher_role_is_submitted(): void
     {
         $this->post('/register', [
             'name' => 'Test User',
-            'email' => 'medewerker@example.com',
+            'email' => 'klant@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
             'role' => UserRole::Admin->value,
         ]);
 
-        $user = User::where('email', 'medewerker@example.com')->firstOrFail();
+        $user = User::where('email', 'klant@example.com')->firstOrFail();
 
-        $this->assertSame(UserRole::MagazijnMedewerker, $user->role);
+        $this->assertSame(UserRole::Klant, $user->role);
+        $this->get(route('products.index'))->assertForbidden();
     }
 }

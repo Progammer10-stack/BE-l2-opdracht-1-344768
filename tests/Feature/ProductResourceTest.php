@@ -18,6 +18,17 @@ class ProductResourceTest extends TestCase
         $response->assertRedirect(route('login'));
     }
 
+    public function test_klant_cannot_view_products_index(): void
+    {
+        $this->seed();
+        $klant = User::factory()->klant()->create();
+
+        $response = $this->actingAs($klant)->get(route('products.index'));
+
+        $response->assertForbidden();
+        $response->assertDontSee('Mintnopjes');
+    }
+
     public function test_medewerker_can_view_products_index(): void
     {
         $this->seed();

@@ -58,4 +58,11 @@ class UserFactory extends Factory
             'role' => UserRole::MagazijnMedewerker,
         ]);
     }
+
+    public function klant(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Klant,
+        ]);
+    }
 }
