@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\LeverancierCatalog;
+use App\Database\LeverancierGegevens;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class LeveringController extends Controller
 {
-    public function __construct(private LeverancierCatalog $catalog) {}
-
     public function create(int $leverancier, int $product): View
     {
-        $gegevens = $this->catalog->leveringGegevens($leverancier, $product);
+        $gegevens = (new LeverancierGegevens)->leveringGegevens($leverancier, $product);
 
         if ($gegevens === null) {
             abort(404);
@@ -28,13 +26,14 @@ class LeveringController extends Controller
 
     public function store(Request $request, int $leverancier, int $product): View|RedirectResponse
     {
-        $gegevens = $this->catalog->leveringGegevens($leverancier, $product);
+        $leverancierGegevens = new LeverancierGegevens;
+        $gegevens = $leverancierGegevens->leveringGegevens($leverancier, $product);
 
         if ($gegevens === null) {
             abort(404);
         }
 
-        $validated = $request->validate([
+        $gecontroleerd = $request->validate([
             'aantal' => ['required', 'integer', 'min:1'],
             'datum_eerstvolgende_levering' => ['required', 'date', 'after_or_equal:today'],
         ], [
@@ -46,6 +45,7 @@ class LeveringController extends Controller
             'datum_eerstvolgende_levering.after_or_equal' => 'De datum van de eerstvolgende levering mag niet in het verleden liggen.',
         ]);
 
+        // IsActief = 0 betekent: dit product wordt niet meer gemaakt. Dan slaan we niets op.
         if (! $this->productWordtNogGemaakt($gegevens['IsActief'])) {
             return view('leveranciers.levering', [
                 'leverancierId' => $leverancier,
@@ -55,12 +55,12 @@ class LeveringController extends Controller
             ]);
         }
 
-        $this->catalog->registreerLevering(
+        $leverancierGegevens->registreerLevering(
             $leverancier,
             $product,
-            (int) $validated['aantal'],
+            (int) $gecontroleerd['aantal'],
             now()->toDateString(),
-            $validated['datum_eerstvolgende_levering'],
+            $gecontroleerd['datum_eerstvolgende_levering'],
         );
 
         return redirect()->route('leveranciers.producten', $leverancier);
@@ -68,6 +68,7 @@ class LeveringController extends Controller
 
     private function productWordtNogGemaakt(mixed $isActief): bool
     {
+        // MySQL BIT komt via PDO soms binnen als het teken met code 0 of 1, niet als het cijfer "0" of "1".
         if (is_string($isActief) && strlen($isActief) === 1 && ! ctype_digit($isActief)) {
             return ord($isActief) === 1;
         }

@@ -9,29 +9,27 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
+    // De schooltabellen heten Product en Id, niet de Laravel-standaard products en id.
     protected $table = 'Product';
 
     protected $primaryKey = 'Id';
 
     public $timestamps = false;
 
+    // Eén magazijnrij per product. Magazijn.ProductId verwijst naar Product.Id.
     public function magazijn(): HasOne
     {
         return $this->hasOne(Magazijn::class, 'ProductId', 'Id');
     }
 
-    /**
-     * @return HasMany<ProductPerLeverancier, $this>
-     */
+    // Alle leveringen van dit product, van oud naar nieuw.
     public function leveringen(): HasMany
     {
         return $this->hasMany(ProductPerLeverancier::class, 'ProductId', 'Id')
             ->orderBy('DatumLevering');
     }
 
-    /**
-     * @return BelongsToMany<Allergeen, $this>
-     */
+    // Allergenen via de koppeltabel ProductPerAllergeen, oplopend op naam.
     public function allergenen(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -41,6 +39,6 @@ class Product extends Model
             'AllergeenId',
             'Id',
             'Id',
-        );
+        )->orderBy('Allergeen.Naam');
     }
 }

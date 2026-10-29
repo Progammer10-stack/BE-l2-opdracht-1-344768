@@ -42,6 +42,8 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // Iedereen die zichzelf registreert, wordt klant. Medewerkers maakt de applicatie niet zelf aan.
         $user->role = UserRole::Klant;
         $user->save();
 

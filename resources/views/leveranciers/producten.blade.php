@@ -36,8 +36,8 @@
                 <tr>
                     <td>{{ $product['ProductNaam'] }}</td>
                     <td>{{ $product['AantalAanwezig'] ?? 'NULL' }}</td>
-                    <td>{{ rtrim(rtrim(number_format((float) $product['VerpakkingsEenheidInKilogram'], 2, '.', ''), '0'), '.') }} kg</td>
-                    <td>{{ $product['LaatsteLevering'] ? \Illuminate\Support\Carbon::parse($product['LaatsteLevering'])->format('d-m-Y') : '' }}</td>
+                    <td>{{ $product['Verpakking'] }}</td>
+                    <td>{{ $product['LaatsteLeveringTekst'] }}</td>
                     <td>
                         <a href="{{ route('leveranciers.levering.create', [$leverancier['Id'], $product['ProductId']]) }}">+</a>
                     </td>

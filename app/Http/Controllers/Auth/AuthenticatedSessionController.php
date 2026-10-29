@@ -29,7 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if ($request->user()?->hasRole(UserRole::Klant)) {
+        $user = $request->user();
+
+        if ($user !== null && $user->hasRole(UserRole::Klant)) {
             return redirect()->route('klant.home');
         }
 

@@ -13,6 +13,7 @@ class Magazijn extends Model
 
     public $timestamps = false;
 
+    // Magazijn.ProductId verwijst naar Product.Id.
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'ProductId', 'Id');

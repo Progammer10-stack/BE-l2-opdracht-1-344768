@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\LeverancierCatalog;
+use App\Database\LeverancierGegevens;
 use Illuminate\View\View;
 
 class LeverancierController extends Controller
 {
-    public function __construct(private LeverancierCatalog $catalog) {}
-
     public function index(): View
     {
+        $leveranciers = (new LeverancierGegevens)->overzicht();
+
         return view('leveranciers.index', [
-            'leveranciers' => $this->catalog->overzicht(),
+            'leveranciers' => $leveranciers,
         ]);
     }
 
     public function producten(int $leverancier): View
     {
-        $gegevens = $this->catalog->geleverdeProducten($leverancier);
+        $gegevens = (new LeverancierGegevens)->geleverdeProducten($leverancier);
 
         if ($gegevens === null) {
             abort(404);

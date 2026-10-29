@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function index(): View
     {
-        // Producten oplopend op barcode, zoals in user story 2
+        // Producten oplopend op barcode, inclusief de magazijnrij
         $producten = Product::with('magazijn')
             ->orderBy('Barcode')
             ->get();
@@ -19,12 +19,18 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
+        // Leveringen van oud naar nieuw, met de bijbehorende leverancier
         $leveringen = $product->leveringen()
             ->with('leverancier')
             ->get();
 
-        $leverancier = $leveringen->first()?->leverancier;
-        $volgendeLevering = $leveringen->last()?->DatumEerstVolgendeLevering;
+        $leverancier = null;
+        $volgendeLevering = null;
+
+        if ($leveringen->isNotEmpty()) {
+            $leverancier = $leveringen->first()->leverancier;
+            $volgendeLevering = $leveringen->last()->DatumEerstVolgendeLevering;
+        }
 
         return view('products.show', compact(
             'product',
@@ -36,10 +42,7 @@ class ProductController extends Controller
 
     public function allergenen(Product $product): View
     {
-        // Allergenen oplopend op naam, zoals in user story 2
-        $product->load(['allergenen' => function ($query) {
-            $query->orderBy('Naam');
-        }]);
+        $product->load('allergenen');
 
         return view('products.allergenen', compact('product'));
     }

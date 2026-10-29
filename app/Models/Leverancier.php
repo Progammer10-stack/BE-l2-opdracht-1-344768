@@ -13,9 +13,7 @@ class Leverancier extends Model
 
     public $timestamps = false;
 
-    /**
-     * @return HasMany<ProductPerLeverancier, $this>
-     */
+    // Een leverancier heeft nul of meer rijen in ProductPerLeverancier.
     public function leveringen(): HasMany
     {
         return $this->hasMany(ProductPerLeverancier::class, 'LeverancierId', 'Id');

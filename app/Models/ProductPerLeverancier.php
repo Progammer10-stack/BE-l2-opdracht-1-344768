@@ -24,17 +24,13 @@ class ProductPerLeverancier extends Model
         ];
     }
 
-    /**
-     * @return BelongsTo<Leverancier, $this>
-     */
+    // ProductPerLeverancier.LeverancierId verwijst naar Leverancier.Id.
     public function leverancier(): BelongsTo
     {
         return $this->belongsTo(Leverancier::class, 'LeverancierId', 'Id');
     }
 
-    /**
-     * @return BelongsTo<Product, $this>
-     */
+    // ProductPerLeverancier.ProductId verwijst naar Product.Id.
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'ProductId', 'Id');

@@ -13,6 +13,7 @@ class Allergeen extends Model
 
     public $timestamps = false;
 
+    // Producten via de koppeltabel ProductPerAllergeen.
     public function producten(): BelongsToMany
     {
         return $this->belongsToMany(
