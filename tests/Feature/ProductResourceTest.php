@@ -65,13 +65,13 @@ class ProductResourceTest extends TestCase
             'Bert van Linge',
             'Productinformatie',
             'Mintnopjes',
-            '09-10-2024',
+            '09-11-2024',
             '23',
-            '16-10-2024',
+            '16-11-2024',
             'Mintnopjes',
-            '18-10-2024',
+            '18-11-2024',
             '21',
-            '25-10-2024',
+            '25-11-2024',
         ]);
     }
 
@@ -92,10 +92,10 @@ class ProductResourceTest extends TestCase
             'Productinformatie',
             'Naam product',
             'Datum levering',
-            'Er is van dit product op dit moment geen voorraad aanwezig, de verwachte eerstvolgende levering is: 30-10-2024',
+            'Er is van dit product op dit moment geen voorraad aanwezig, de verwachte eerstvolgende levering is: 30-11-2024',
             'Je wordt over 4 seconden teruggestuurd naar het magazijnoverzicht.',
         ]);
-        $response->assertDontSee('16-10-2024');
+        $response->assertDontSee('16-11-2024');
         $response->assertSee('4000', false);
     }
 

@@ -6,7 +6,8 @@
     <title>Overzicht Magazijn Jamin</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 20px; }
-        header { display: flex; justify-content: space-between; align-items: center; }
+        header { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        header a { margin-right: 12px; }
         table { width: 100%; border-collapse: collapse; margin-top: 25px; }
         th, td { border: 1px solid #cccccc; padding: 12px; text-align: left; }
         th { background: #f3f4f6; }
@@ -33,10 +34,14 @@
             <p>Producten in het magazijn</p>
         </div>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">Uitloggen</button>
-        </form>
+        <div>
+            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('leveranciers.index') }}">Overzicht Leveranciers</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">Uitloggen</button>
+            </form>
+        </div>
     </header>
 
     <table>

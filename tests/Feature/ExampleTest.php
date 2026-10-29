@@ -18,15 +18,21 @@ class ExampleTest extends TestCase
         $response->assertSee('Registreren');
         $response->assertSee(route('login'), false);
         $response->assertSee(route('register'), false);
+        $response->assertDontSee('Overzicht Leveranciers');
+        $response->assertDontSee('Overzicht producten Jamin');
     }
 
-    public function test_authenticated_user_is_redirected_to_the_product_overview(): void
+    public function test_medewerker_sees_overview_links_on_the_homepage(): void
     {
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/');
 
-        $response->assertRedirect(route('products.index'));
+        $response->assertSee('Overzicht Leveranciers');
+        $response->assertSee(route('leveranciers.index'), false);
+        $response->assertSee('Overzicht producten Jamin');
+        $response->assertSee(route('products.index'), false);
+        $response->assertDontSee('Kies of je wilt inloggen of een account wilt aanmaken.');
     }
 
     public function test_klant_is_redirected_to_the_customer_home(): void

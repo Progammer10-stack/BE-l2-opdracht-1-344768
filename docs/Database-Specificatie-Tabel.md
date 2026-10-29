@@ -4,6 +4,15 @@ Database: `breezedemo`
 
 Deze specificatie beschrijft de tabellen die gebruikt worden voor het magazijn van Jamin.
 
+Elke specificatietabel hieronder heeft ook deze systeemvelden:
+
+| Kolom | Datatype | Null | Extra |
+| --- | --- | --- | --- |
+| IsActief | BIT | Nee | Standaard 1. Bij Product 10 (Winegums) staat deze op 0 |
+| Opmerking | VARCHAR(255) | Ja | Vrije opmerking |
+| DatumAangemaakt | DATETIME(6) | Nee | Standaard NOW(6) |
+| DatumGewijzigd | DATETIME(6) | Nee | Standaard NOW(6), wordt bijgewerkt bij wijziging |
+
 ## Product
 
 | Kolom | Datatype | Null | Key | Extra | Omschrijving |
@@ -52,6 +61,8 @@ Deze specificatie beschrijft de tabellen die gebruikt worden voor het magazijn v
 | ContactPersoon | VARCHAR(255) | Nee |  |  | Naam van de contactpersoon |
 | LeverancierNummer | VARCHAR(20) | Nee |  |  | Uniek leveranciernummer |
 | Mobiel | VARCHAR(20) | Nee |  |  | Mobiel nummer van de contactpersoon |
+
+Leverancier 6 is Quality Street, contactpersoon Johan Nooij, nummer L1029234586, mobiel 06-23458456. Deze leverancier heeft nog geen leveringen.
 
 ## ProductPerLeverancier
 

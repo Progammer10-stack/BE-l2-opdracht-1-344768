@@ -12,7 +12,8 @@ return new class extends Migration
     {
         $bestaat = DB::table('ProductPerLeverancier')
             ->where('ProductId', 13)
-            ->where('DatumLevering', '2024-10-12')
+            ->where('LeverancierId', 5)
+            ->where('DatumLevering', '2024-11-12')
             ->exists();
 
         if ($bestaat) {
@@ -23,7 +24,7 @@ return new class extends Migration
             'Id' => 17,
             'LeverancierId' => 5,
             'ProductId' => 13,
-            'DatumLevering' => '2024-10-12',
+            'DatumLevering' => '2024-11-12',
             'Aantal' => 23,
             'DatumEerstVolgendeLevering' => null,
         ]);

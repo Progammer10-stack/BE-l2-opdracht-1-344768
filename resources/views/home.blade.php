@@ -24,18 +24,40 @@
 </head>
 <body>
     <h1>Magazijn Jamin</h1>
-    <p>Kies of je wilt inloggen of een account wilt aanmaken.</p>
 
-    <div class="keuzes">
-        <a class="keuze" href="{{ route('login') }}">
-            <h2>Inloggen</h2>
-            <p>Ga verder met een bestaand account.</p>
-        </a>
+    @can('access-medewerker-dashboard')
+        <p>Kies een overzicht.</p>
 
-        <a class="keuze" href="{{ route('register') }}">
-            <h2>Registreren</h2>
-            <p>Maak een nieuw account aan.</p>
-        </a>
-    </div>
+        <div class="keuzes">
+            <a class="keuze" href="{{ route('leveranciers.index') }}">
+                <h2>Overzicht Leveranciers</h2>
+                <p>Bekijk de leveranciers en hun producten.</p>
+            </a>
+
+            <a class="keuze" href="{{ route('products.index') }}">
+                <h2>Overzicht producten Jamin</h2>
+                <p>Bekijk de producten in het magazijn.</p>
+            </a>
+        </div>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">Uitloggen</button>
+        </form>
+    @else
+        <p>Kies of je wilt inloggen of een account wilt aanmaken.</p>
+
+        <div class="keuzes">
+            <a class="keuze" href="{{ route('login') }}">
+                <h2>Inloggen</h2>
+                <p>Ga verder met een bestaand account.</p>
+            </a>
+
+            <a class="keuze" href="{{ route('register') }}">
+                <h2>Registreren</h2>
+                <p>Maak een nieuw account aan.</p>
+            </a>
+        </div>
+    @endcan
 </body>
 </html>

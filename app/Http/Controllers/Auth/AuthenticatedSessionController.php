@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('klant.home');
         }
 
-        return redirect()->intended(route('products.index', absolute: false));
+        return redirect()->intended(route('home', absolute: false));
     }
 
     /**
